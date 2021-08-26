@@ -1,26 +1,64 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="cron">
+    <h1>vue-cron</h1>
+    <el-popover v-model:visible="state.cronPopover" width="700px" trigger="manual">
+      <vueCron
+        @change="changeCron"
+        @close="togglePopover(false)"
+        i18n="cn"
+      ></vueCron>
+      <template #reference>
+        <el-input
+          @focus="togglePopover(true)"
+          v-model="state.cron"
+          placeholder="* * * * * ? *"
+        ></el-input>
+      </template>
+    </el-popover>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
+import VueCron from "@/components/vue3-cron/index.vue";
+import { reactive,defineComponent, watch } from 'vue'
+export default defineComponent ({
+  name: "App",
   components: {
-    HelloWorld
+    VueCron,
+  },
+  setup(){
+    const state = reactive({
+      cronPopover: false,
+      cron: ''
+    })
+    const changeCron = (val) => {
+      if(typeof(val) !== 'string') return false
+      state.cron = val
+    }
+    watch(()=>state.cron,(val) => {
+      console.log(val,'croncron')
+    })
+    const togglePopover = (bol) => {
+      state.cronPopover = bol
+    }
+    
+    return {
+      state,
+      changeCron,
+      togglePopover
+    }
   }
-}
+});
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss" scoped>
+.cron {
+  width: 400px;
+  margin: 0 auto;
+  margin-top: 100px;
+  h1 {
+    font-size: 50px;
+    text-align: center;
+  }
 }
 </style>
