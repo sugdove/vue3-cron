@@ -1,5 +1,5 @@
 const path = require('path')
-const getPath = (relativePath) => path.join(__dirname, relativePath)
+const resolve = (relativePath) => path.join(__dirname, relativePath)
 module.exports = {
   // 修改 src 为 examples
   pages: {
@@ -11,16 +11,28 @@ module.exports = {
   },
   // 扩展 webpack 配置，使 packages 加入编译
   chainWebpack: config => {
+    config.resolve.alias
+      .set('@', resolve('examples'))
+      .set('~', resolve('packages'))
+    config.module
+      .rule('eslint')
+      .exclude.add(path.resolve('lib'))
+      .end()
+      .exclude.add(path.resolve('examples/docs'))
+      .end()
+      
     config.module
       .rule('js')
       .include
-        .add(getPath('packages')) // 此处注意node执行路径, 需要用__dirname 获得真实路径
-        .end()
+      .add('/packages/')
+      .end()
+      .include.add(/examples/)
+      .end()
       .use('babel')
-        .loader('babel-loader')
-        .tap(options => {
-          // 修改它的选项...
-          return options
-        })
+      .loader('babel-loader')
+      .tap(options => {
+        // 修改它的选项...
+        return options
+      })
   }
-}
+};

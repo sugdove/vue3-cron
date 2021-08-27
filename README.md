@@ -25,17 +25,18 @@ import ElementPlus from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import App from './App.vue'
 //全局引入
-import Vue3Cron from 'vue3-cron'
+import vue3Cron from 'vue3-cron' 
+import 'vue3-cron/lib/vue3Cron.css' // 引入样式
 const app = createApp(App)
-app.use(ElementPlus).use(Vue3Cron).mount('#app') //使用方式：<vue3Cron></vue3Cron>
+app.use(ElementPlus).use(vue3Cron).mount('#app') //使用方式：<vue3Cron></vue3Cron>
 
 
 //局部引入
-import { Vue3Cron } from 'vue3-cron'
-
+import { vue3Cron } from 'vue3-cron'
+import 'vue3-cron/lib/vue3Cron.css' // 引入样式
 export default {
     template: '<cron/>',
-    components: { Vue3Cron }
+    components: { vue3Cron }
 }
 ```
 

@@ -542,7 +542,7 @@
 import Language from "./language";
 import { reactive, computed,toRefs } from "vue";
 export default {
-  name: "Vue3Cron",
+  name: "vue3Cron",
   props: ["cronValue", "i18n"],
   setup(props, { emit }) {
     const { i18n } = toRefs(props)

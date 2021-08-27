@@ -1,8 +1,19 @@
-import vueCron from './vue3-cron/index.vue';
 
-export default {
-    install(Vue){
-        Vue.component(vueCron.name,vueCron)
-    }
+import vue3Cron from './vue3-cron';
+const components = [
+  vue3Cron,
+  // ...如果还有的话继续添加
+]
+const install = function (Vue) {
+  components.map(component => {
+    Vue.component(component.name, component);
+  })
 }
-
+/* 支持使用标签的方式引入 */
+if (typeof window !== 'undefined' && window.Vue) {
+  install(window.Vue);
+}
+export default {
+  install,
+  vue3Cron,
+}
