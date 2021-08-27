@@ -1,5 +1,8 @@
-<style lang="scss" scoped>
-#changeContab {
+<style lang="scss">
+.vue3-cron-div {
+  .el-input-number__decrease, .el-input-number__increase {
+    top: 2px !important
+  }
   .language {
     position: absolute;
     right: 25px;
@@ -23,25 +26,23 @@
   }
   .bottom {
     width: 100%;
-    text-align: center;
     margin-top: 5px;
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     .value {
       float: left;
-      font-size: 16px;
+      font-size: 14px;
       vertical-align: middle;
       span:nth-child(1) {
         color: red
-      }
-      span:nth-child(2) {
-        color: blue
       }
     }
   }
 }
 </style>
 <template>
-  <div id="changeContab">
+  <div class="vue3-cron-div">
     <el-button
       class="language"
       type="text"
@@ -526,12 +527,14 @@
         <span>
           cron预览:
         </span>
-        <span>
+        <el-tag type="primary"> 
           {{ state.cron }}
-        </span>
+        </el-tag>
         </div>
+        <div class="buttonDiv">
       <el-button type="primary" size="mini" @click.stop="handleChange">{{ state.text.Save }}</el-button>
       <el-button type="primary" size="mini" @click="close">{{ state.text.Close }}</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -539,7 +542,7 @@
 import Language from "../../language/index";
 import { reactive, computed,toRefs } from "vue";
 export default {
-  name: "vueCron",
+  name: "vue3Cron",
   props: ["cronValue", "i18n"],
   setup(props, { emit }) {
     const { i18n } = toRefs(props)

@@ -2,11 +2,11 @@
   <div class="cron">
     <h1>vue-cron</h1>
     <el-popover v-model:visible="state.cronPopover" width="700px" trigger="manual">
-      <vueCron
+      <vue3Cron
         @change="changeCron"
         @close="togglePopover(false)"
         i18n="cn"
-      ></vueCron>
+      ></vue3Cron>
       <template #reference>
         <el-input
           @focus="togglePopover(true)"
@@ -19,13 +19,9 @@
 </template>
 
 <script>
-import VueCron from "@/components/vue3-cron/index.vue";
 import { reactive,defineComponent, watch } from 'vue'
 export default defineComponent ({
   name: "App",
-  components: {
-    VueCron,
-  },
   setup(){
     const state = reactive({
       cronPopover: false,
