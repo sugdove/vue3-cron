@@ -1,4 +1,4 @@
-# vue-cron
+# vue3-cron
 
 ![CocoaPods](https://img.shields.io/npm/dt/vue3-cron.svg)
 ![CocoaPods](https://img.shields.io/npm/v/vue3-cron.svg)
@@ -44,7 +44,7 @@ export default {
 ```vue
 <template>
   <div class="cron">
-    <h1>vue-cron</h1>
+    <h1>vue3-cron</h1>
     <el-popover v-model:visible="state.cronPopover" width="700px" trigger="manual">
       <vue3Cron
         @change="changeCron"
