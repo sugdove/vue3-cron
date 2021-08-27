@@ -539,10 +539,10 @@
   </div>
 </template>
 <script>
-import Language from "../../language/index";
+import Language from "./language";
 import { reactive, computed,toRefs } from "vue";
 export default {
-  name: "vue3Cron",
+  name: "Vue3Cron",
   props: ["cronValue", "i18n"],
   setup(props, { emit }) {
     const { i18n } = toRefs(props)
