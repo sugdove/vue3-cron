@@ -1,6 +1,7 @@
 const path = require('path')
 const resolve = (relativePath) => path.join(__dirname, relativePath)
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production' ? './' : './', // 开发环境与生产环境的区分
   // 修改 src 为 examples
   pages: {
     index: {
