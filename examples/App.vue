@@ -1,6 +1,6 @@
 <template>
   <div class="cron">
-    <h1>vue-cron</h1>
+    <h1>vue3-cron</h1>
     <el-popover v-model:visible="state.cronPopover" width="700px" trigger="manual">
       <vue3Cron
         @change="changeCron"

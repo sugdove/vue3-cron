@@ -1,11 +1,11 @@
-# vue-cron
+# vue3-cron
 
 ![CocoaPods](https://img.shields.io/npm/dt/vue3-cron.svg)
 ![CocoaPods](https://img.shields.io/npm/v/vue3-cron.svg)
 
 
 这是一个cron表达式生成插件,基于vue3.0与element-plus实现
-[demo](https://1615450788.github.io/vue-cron/dist/index)
+[demo](https://githubs.club/demo/)
 
 
 ## 依赖
@@ -44,7 +44,7 @@ export default {
 ```vue
 <template>
   <div class="cron">
-    <h1>vue-cron</h1>
+    <h1>vue3-cron</h1>
     <el-popover v-model:visible="state.cronPopover" width="700px" trigger="manual">
       <vue3Cron
         @change="changeCron"
