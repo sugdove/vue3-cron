@@ -32,11 +32,11 @@ app.use(ElementPlus).use(vue3Cron).mount('#app') //使用方式：<vue3Cron></vu
 
 
 //局部引入
-import { vue3Cron } from 'vue3-cron'
+import { cronExp } from 'vue3-cron'
 import 'vue3-cron/lib/vue3Cron.css' // 引入样式
 export default {
-    template: '<cron/>',
-    components: { vue3Cron }
+    template: '<cronExp/>',
+    components: { cronExp }
 }
 ```
 
@@ -65,7 +65,6 @@ export default {
 <script>
 import { reactive,defineComponent, watch } from 'vue'
 export default defineComponent ({
-  name: "App",
   setup(){
     const state = reactive({
       cronPopover: false,
