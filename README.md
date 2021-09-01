@@ -74,9 +74,6 @@ export default defineComponent ({
       if(typeof(val) !== 'string') return false
       state.cron = val
     }
-    watch(()=>state.cron,(val) => {
-      console.log(val,'croncron')
-    })
     const togglePopover = (bol) => {
       state.cronPopover = bol
     }
