@@ -849,10 +849,5 @@ export default {
       rest
     }
   },
-  // watch: {
-  //   cronValue() {
-  //     this.rest(this.$data);
-  //   },
-  // },
 };
 </script>

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { reactive,defineComponent, watch } from 'vue'
+import { reactive,defineComponent } from 'vue'
 export default defineComponent ({
   name: "App",
   setup(){
