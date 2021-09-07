@@ -540,8 +540,8 @@
 </template>
 <script>
 import Language from "./language";
-import { reactive, computed,toRefs } from "vue";
-export default {
+import { reactive, computed,toRefs,defineComponent } from "vue";
+export default defineComponent({
   name: "vue3Cron",
   props: ["cronValue", "i18n"],
   setup(props, { emit }) {
@@ -849,5 +849,5 @@ export default {
       rest
     }
   },
-};
+});
 </script>
