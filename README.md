@@ -5,7 +5,7 @@
 
 
 这是一个cron表达式生成插件,基于vue3.0与element-plus实现
-[demo](https://githubs.club/demo/)
+[demo](https://githubs.club/vue3-cron/)
 
 ## 项目地址
 
