@@ -5,6 +5,7 @@
       <vue3Cron
         @change="changeCron"
         @close="togglePopover(false)"
+        max-height="400px"
         i18n="cn"
       ></vue3Cron>
       <template #reference>

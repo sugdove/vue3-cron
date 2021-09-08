@@ -54,6 +54,7 @@ export default {
       <vue3Cron
         @change="changeCron"
         @close="togglePopover(false)"
+        max-height="400px"
         i18n="cn"
       ></vue3Cron>
       <template #reference>
@@ -115,6 +116,12 @@ export default defineComponent ({
     - 参数 `{String} language` 目前仅支持`en|cn`
     
     国际化支持
+
+- max-height
+
+    - 参数 `{String} height` 
+    
+    设定vue3-cron的max-height, 默认没有该属性
 
 ## 事件
 - change(cronText)

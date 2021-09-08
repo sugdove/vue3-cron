@@ -12,6 +12,7 @@
     box-shadow: none;
   }
   .tabBody {
+    overflow: auto;
     .el-row {
       margin: 20px 0;
       .long {
@@ -22,6 +23,34 @@
       .el-input-number {
         width: 110px;
       }
+    }
+  }
+  .myScroller {
+    &::-webkit-scrollbar {
+      /*滚动条整体样式*/
+      width : 5px;  /*高宽分别对应横竖滚动条的尺寸*/
+      height: 1px;
+    }
+    &::-webkit-scrollbar-thumb {
+      /*滚动条里面小方块*/
+      border-radius   : 10px;
+      background-color: skyblue;
+      background-image: -webkit-linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.2) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba(255, 255, 255, 0.2) 50%,
+          rgba(255, 255, 255, 0.2) 75%,
+          transparent 75%,
+          transparent
+      );
+    }
+    &::-webkit-scrollbar-track {
+      /*滚动条里面轨道*/
+      box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+      background   : #ededed;
+      border-radius: 10px;
     }
   }
   .bottom {
@@ -54,7 +83,7 @@
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Seconds.name }}</span>
         </template>
-        <div class="tabBody">
+        <div class="tabBody myScroller" :style="{'max-height': maxHeight}">
           <el-row>
             <el-radio v-model="state.second.cronEvery" label="1">{{
               state.text.Seconds.every
@@ -121,7 +150,7 @@
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Minutes.name }}</span>
         </template>
-        <div class="tabBody">
+        <div class="tabBody myScroller" :style="{'max-height': maxHeight}">
           <el-row>
             <el-radio v-model="state.minute.cronEvery" label="1">{{
               state.text.Minutes.every
@@ -188,7 +217,7 @@
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Hours.name }}</span>
         </template>
-        <div class="tabBody">
+        <div class="tabBody myScroller" :style="{'max-height': maxHeight}">
           <el-row>
             <el-radio v-model="state.hour.cronEvery" label="1">{{
               state.text.Hours.every
@@ -251,7 +280,7 @@
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Day.name }}</span>
         </template>
-        <div class="tabBody">
+        <div class="tabBody myScroller" :style="{'max-height': maxHeight}">
           <el-row>
             <el-radio v-model="state.day.cronEvery" label="1">{{
               state.text.Day.every
@@ -398,7 +427,7 @@
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Month.name }}</span>
         </template>
-        <div class="tabBody">
+        <div class="tabBody myScroller" :style="{'max-height': maxHeight}">
           <el-row>
             <el-radio v-model="state.month.cronEvery" label="1">{{
               state.text.Month.every
@@ -459,7 +488,7 @@
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Year.name }}</span>
         </template>
-        <div class="tabBody">
+        <div class="tabBody myScroller" :style="{'max-height': maxHeight}">
           <el-row>
             <el-radio v-model="state.year.cronEvery" label="1">{{
               state.text.Year.every
@@ -543,7 +572,11 @@ import Language from "./language";
 import { reactive, computed,toRefs,defineComponent } from "vue";
 export default defineComponent({
   name: "vue3Cron",
-  props: ["cronValue", "i18n"],
+  props: {
+    cronValue: {},
+    i18n: {},
+    maxHeight: {}
+  },
   setup(props, { emit }) {
     const { i18n } = toRefs(props)
     const state = reactive({
