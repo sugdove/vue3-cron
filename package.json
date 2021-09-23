@@ -1,6 +1,6 @@
 {
   "name": "vue3-cron",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "private": false,
   "description": "Corn expression plugin based on vue3+elementplus（基于vue3+elementplus的corn表达式插件）",
   "author": "suge",

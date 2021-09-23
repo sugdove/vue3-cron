@@ -22,7 +22,7 @@
 npm install vue3-cron
 ```
 
-## 引入方式
+## 全局引入方式
 ```javascript
 //前置配置
 import { createApp } from 'vue'
@@ -34,17 +34,17 @@ import vue3Cron from 'vue3-cron'
 import 'vue3-cron/lib/vue3Cron.css' // 引入样式
 const app = createApp(App)
 app.use(ElementPlus).use(vue3Cron).mount('#app') //使用方式：<vue3Cron></vue3Cron>
-
-
+```
+## 局部引入方式
+```javascript
 //局部引入
-import { cronExp } from 'vue3-cron'
+import { vue3Cron } from 'vue3-cron'
 import 'vue3-cron/lib/vue3Cron.css' // 引入样式
 export default {
-    template: '<cronExp/>',
-    components: { cronExp }
+    template: '<vue3Cron/>',
+    components: { vue3Cron }
 }
 ```
-
 ## 示例
 ```vue
 <template>
@@ -141,5 +141,7 @@ export default defineComponent ({
 邮箱 : 849809724@qq.com
 
 欢迎大家关注我做的网站: https://githubs.club/
+
+如果对您有帮助, 欢迎star
 
 有任何问题请发Issues或者邮箱联系我-.-  谢谢!
