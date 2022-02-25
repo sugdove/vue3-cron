@@ -1,7 +1,7 @@
 <style lang="scss">
 .vue3-cron-div {
   .el-input-number__decrease, .el-input-number__increase {
-    top: 2px !important
+    top: 1px !important
   }
   .language {
     position: absolute;
@@ -556,7 +556,7 @@
         <span>
           cron预览:
         </span>
-        <el-tag type="primary"> 
+        <el-tag type="primary">
           {{ state.cron }}
         </el-tag>
         </div>
@@ -650,196 +650,402 @@ export default defineComponent({
         year: "",
       },
       text: computed(() => Language[state.language || "cn"]),
-      secondsText: computed(() => {
-        let seconds = "";
-        let cronEvery = state.second.cronEvery;
-        switch (cronEvery.toString()) {
-          case "1":
-            seconds = "*";
-            break;
-          case "2":
-            seconds =
-              state.second.incrementStart +
-              "/" +
-              state.second.incrementIncrement;
-            break;
-          case "3":
-            state.second.specificSpecific.map((val) => {
-              seconds += val + ",";
-            });
-            seconds = seconds.slice(0, -1);
-            break;
-          case "4":
-            seconds = state.second.rangeStart + "-" + state.second.rangeEnd;
-            break;
+      secondsText: computed({
+        get: () => {
+          let seconds = "";
+          let cronEvery = state.second.cronEvery;
+          switch (cronEvery.toString()) {
+            case "1":
+              seconds = "*";
+              break;
+            case "2":
+              seconds =
+                state.second.incrementStart +
+                "/" +
+                state.second.incrementIncrement;
+              break;
+            case "3":
+              state.second.specificSpecific.map((val) => {
+                seconds += val + ",";
+              });
+              seconds = seconds.slice(0, -1);
+              break;
+            case "4":
+              seconds = state.second.rangeStart + "-" + state.second.rangeEnd;
+              break;
+          }
+          console.log(seconds)
+          return seconds;
+        },
+        set: (value) => {
+          if(value === '*') {
+            state.second.cronEvery = '1'
+            return
+          }
+          if (value.indexOf('/') !== -1) {
+            state.second.cronEvery = '2'
+            const valueArr = value.split('/')
+            state.second.incrementStart = Number(valueArr[0])
+            state.second.incrementIncrement = Number(valueArr[1])
+            return
+          }
+          if(value.indexOf(',') !== -1 || (value.length > 0 && !Number.isNaN(Number(value)) && Number(value) < 60 && Number(value) >= 0)) {
+            state.second.cronEvery = '3'
+            const valueArr = value.split(',')
+            state.second.specificSpecific = valueArr.map(item => Number(item))
+            return
+          }
+          if (value.indexOf('-') !== -1) {
+            state.second.cronEvery = '4'
+            const valueArr = value.split('-')
+            state.second.rangeStart = Number(valueArr[0])
+            state.second.rangeEnd = Number(valueArr[1])
+            return
+          }
         }
-        console.log(seconds)
-        return seconds;
       }),
-      minutesText: computed(() => {
-        let minutes = "";
-        let cronEvery = state.minute.cronEvery;
-        switch (cronEvery.toString()) {
-          case "1":
-            minutes = "*";
-            break;
-          case "2":
-            minutes =
-              state.minute.incrementStart +
-              "/" +
-              state.minute.incrementIncrement;
-            break;
-          case "3":
-            state.minute.specificSpecific.map((val) => {
-              minutes += val + ",";
-            });
-            minutes = minutes.slice(0, -1);
-            break;
-          case "4":
-            minutes = state.minute.rangeStart + "-" + state.minute.rangeEnd;
-            break;
+      minutesText: computed({
+        get: () => {
+          let minutes = "";
+          let cronEvery = state.minute.cronEvery;
+          switch (cronEvery.toString()) {
+            case "1":
+              minutes = "*";
+              break;
+            case "2":
+              minutes =
+                state.minute.incrementStart +
+                "/" +
+                state.minute.incrementIncrement;
+              break;
+            case "3":
+              state.minute.specificSpecific.map((val) => {
+                minutes += val + ",";
+              });
+              minutes = minutes.slice(0, -1);
+              break;
+            case "4":
+              minutes = state.minute.rangeStart + "-" + state.minute.rangeEnd;
+              break;
+          }
+          return minutes;
+        },
+        set: (value) => {
+          if(value === '*') {
+            state.minute.cronEvery = '1'
+            return
+          }
+          if (value.indexOf('/') !== -1) {
+            state.minute.cronEvery = '2'
+            const valueArr = value.split('/')
+            state.minute.incrementStart = Number(valueArr[0])
+            state.minute.incrementIncrement = Number(valueArr[1])
+            return
+          }
+          if(value.indexOf(',') !== -1 || (value.length > 0 && !Number.isNaN(Number(value)) && Number(value) < 60 && Number(value) >= 0)) {
+            state.minute.cronEvery = '3'
+            const valueArr = value.split(',')
+            state.minute.specificSpecific = valueArr.map(item => Number(item))
+            return
+          }
+          if (value.indexOf('-') !== -1) {
+            state.minute.cronEvery = '4'
+            const valueArr = value.split('-')
+            state.minute.rangeStart = Number(valueArr[0])
+            state.minute.rangeEnd = Number(valueArr[1])
+            return
+          }
         }
-        return minutes;
       }),
-      hoursText: computed(() => {
-        let hours = "";
-        let cronEvery = state.hour.cronEvery;
-        switch (cronEvery.toString()) {
-          case "1":
-            hours = "*";
-            break;
-          case "2":
-            hours =
-              state.hour.incrementStart + "/" + state.hour.incrementIncrement;
-            break;
-          case "3":
-            state.hour.specificSpecific.map((val) => {
-              hours += val + ",";
-            });
-            hours = hours.slice(0, -1);
-            break;
-          case "4":
-            hours = state.hour.rangeStart + "-" + state.hour.rangeEnd;
-            break;
+      hoursText: computed({
+        get: () => {
+          let hours = "";
+          let cronEvery = state.hour.cronEvery;
+          switch (cronEvery.toString()) {
+            case "1":
+              hours = "*";
+              break;
+            case "2":
+              hours =
+                state.hour.incrementStart + "/" + state.hour.incrementIncrement;
+              break;
+            case "3":
+              state.hour.specificSpecific.map((val) => {
+                hours += val + ",";
+              });
+              hours = hours.slice(0, -1);
+              break;
+            case "4":
+              hours = state.hour.rangeStart + "-" + state.hour.rangeEnd;
+              break;
+          }
+          return hours;
+        },
+        set: (value) => {
+          if(value === '*') {
+            state.hour.cronEvery = '1'
+            return
+          }
+          if (value.indexOf('/') !== -1) {
+            state.hour.cronEvery = '2'
+            const valueArr = value.split('/')
+            state.hour.incrementStart = Number(valueArr[0])
+            state.hour.incrementIncrement = Number(valueArr[1])
+            return
+          }
+          if(value.indexOf(',') !== -1 || (value.length > 0 && !Number.isNaN(Number(value)) && Number(value) < 24 && Number(value) >= 0)) {
+            state.hour.cronEvery = '3'
+            const valueArr = value.split(',')
+            state.hour.specificSpecific = valueArr.map(item => Number(item))
+            return
+          }
+          if (value.indexOf('-') !== -1) {
+            state.hour.cronEvery = '4'
+            const valueArr = value.split('-')
+            state.hour.rangeStart = Number(valueArr[0])
+            state.hour.rangeEnd = Number(valueArr[1])
+            return
+          }
         }
-        return hours;
       }),
-      daysText: computed(() => {
-        let days = "";
-        let cronEvery = state.day.cronEvery;
-        switch (cronEvery.toString()) {
-          case "1":
-            break;
-          case "2":
-          case "4":
-          case "11":
-            days = "?";
-            break;
-          case "3":
-            days =
-              state.day.incrementStart + "/" + state.day.incrementIncrement;
-            break;
-          case "5":
-            state.day.specificSpecific.map((val) => {
-              days += val + ",";
-            });
-            days = days.slice(0, -1);
-            break;
-          case "6":
-            days = "L";
-            break;
-          case "7":
-            days = "LW";
-            break;
-          case "8":
-            days = state.day.cronLastSpecificDomDay + "L";
-            break;
-          case "9":
-            days = "L-" + state.day.cronDaysBeforeEomMinus;
-            break;
-          case "10":
-            days = state.day.cronDaysNearestWeekday + "W";
-            break;
+      daysText: computed({
+        get: () => {
+          let days = "";
+          let cronEvery = state.day.cronEvery;
+          switch (cronEvery.toString()) {
+            case "1":
+              break;
+            case "2":
+            case "4":
+            case "11":
+              days = "?";
+              break;
+            case "3":
+              days =
+                state.day.incrementStart + "/" + state.day.incrementIncrement;
+              break;
+            case "5":
+              state.day.specificSpecific.map((val) => {
+                days += val + ",";
+              });
+              days = days.slice(0, -1);
+              break;
+            case "6":
+              days = "L";
+              break;
+            case "7":
+              days = "LW";
+              break;
+            case "8":
+              days = state.day.cronLastSpecificDomDay + "L";
+              break;
+            case "9":
+              days = "L-" + state.day.cronDaysBeforeEomMinus;
+              break;
+            case "10":
+              days = state.day.cronDaysNearestWeekday + "W";
+              break;
+          }
+          return days;
+        },
+        set: (value) => {
+          // if(value === '*') {
+          //   state.day.cronEvery = '1'
+          // }
+          if (value.indexOf('/') !== -1) {
+            state.day.cronEvery = '3'
+            const valueArr = value.split('/')
+            state.day.incrementStart = Number(valueArr[0])
+            state.day.incrementIncrement = Number(valueArr[1])
+            return
+          }
+          if(value.indexOf(',') !== -1 || (value.length > 0 && !Number.isNaN(Number(value)) && Number(value) <= 31 && Number(value) > 0)) {
+            state.day.cronEvery = '5'
+            const valueArr = value.split(',')
+            state.day.specificSpecific = valueArr.map(item => Number(item))
+            return
+          }
+          if(value === 'L') {
+            state.day.cronEvery = '6'
+            return
+          }
+          if(value === 'LW') {
+            state.day.cronEvery = '7'
+            return
+          }
+          if(/^[1,2,3,4,5,6,7]L$/.test(value)) {
+            state.day.cronEvery = '8'
+            state.day.cronLastSpecificDomDay = Number(value[0])
+            return
+          }
+          if(value.indexOf('L-') !== -1) {
+            state.day.cronEvery = '9'
+            state.day.cronDaysBeforeEomMinus = Number(value.split('-')[1])
+            return
+          }
+          if(/^\dW$/.test(value)) {
+            state.day.cronEvery = '10'
+            state.day.cronDaysNearestWeekday = Number(value.slice(0, -1))
+            return
+          }
         }
-        return days;
       }),
-      weeksText: computed(() => {
-        let weeks = "";
-        let cronEvery = state.day.cronEvery;
-        switch (cronEvery.toString()) {
-          case "1":
-          case "3":
-          case "5":
-            weeks = "?";
-            break;
-          case "2":
-            weeks =
-              state.week.incrementStart + "/" + state.week.incrementIncrement;
-            break;
-          case "4":
-            state.week.specificSpecific.map((val) => {
-              weeks += val + ",";
-            });
-            weeks = weeks.slice(0, -1);
-            break;
-          case "6":
-          case "7":
-          case "8":
-          case "9":
-          case "10":
-            weeks = "?";
-            break;
-          case "11":
-            weeks = state.week.cronNthDayDay + "#" + state.week.cronNthDayNth;
-            break;
+      weeksText: computed({
+        get: () => {
+          let weeks = "";
+          let cronEvery = state.day.cronEvery;
+          switch (cronEvery.toString()) {
+            case "1":
+            case "3":
+            case "5":
+              weeks = "?";
+              break;
+            case "2":
+              weeks =
+                state.week.incrementStart + "/" + state.week.incrementIncrement;
+              break;
+            case "4":
+              state.week.specificSpecific.map((val) => {
+                weeks += val + ",";
+              });
+              weeks = weeks.slice(0, -1);
+              break;
+            case "6":
+            case "7":
+            case "8":
+            case "9":
+            case "10":
+              weeks = "?";
+              break;
+            case "11":
+              weeks = state.week.cronNthDayDay + "#" + state.week.cronNthDayNth;
+              break;
+          }
+          return weeks;
+        },
+        set: (value) => {
+          if (value.indexOf('/') !== -1) {
+            state.day.cronEvery = '2'
+            const valueArr = value.split('/')
+            state.week.incrementStart = Number(valueArr[0])
+            state.week.incrementIncrement = Number(valueArr[1])
+            return
+          }
+          if(value.indexOf(',') !== -1 || /(SUN)|(MON)|(TUE)|(WED)|(THU)|(FRI)|(SAT)/.test(value)) {
+            state.day.cronEvery = '4'
+            const valueArr = value.split(',')
+            state.week.specificSpecific = valueArr
+            return
+          }
+          if(value.indexOf('#') !== -1) {
+            const valueArr = value.split('#')
+            state.week.cronNthDayDay = Number(valueArr[0])
+            state.week.cronNthDayNth = Number(valueArr[1])
+            return
+          }
         }
-        return weeks;
       }),
-      monthsText: computed(() => {
-        let months = "";
-        let cronEvery = state.month.cronEvery;
-        switch (cronEvery.toString()) {
-          case "1":
-            months = "*";
-            break;
-          case "2":
-            months =
-              state.month.incrementStart + "/" + state.month.incrementIncrement;
-            break;
-          case "3":
-            state.month.specificSpecific.map((val) => {
-              months += val + ",";
-            });
-            months = months.slice(0, -1);
-            break;
-          case "4":
-            months = state.month.rangeStart + "-" + state.month.rangeEnd;
-            break;
+      monthsText: computed({
+        get: () => {
+          let months = "";
+          let cronEvery = state.month.cronEvery;
+          switch (cronEvery.toString()) {
+            case "1":
+              months = "*";
+              break;
+            case "2":
+              months =
+                state.month.incrementStart + "/" + state.month.incrementIncrement;
+              break;
+            case "3":
+              state.month.specificSpecific.map((val) => {
+                months += val + ",";
+              });
+              months = months.slice(0, -1);
+              break;
+            case "4":
+              months = state.month.rangeStart + "-" + state.month.rangeEnd;
+              break;
+          }
+          return months;
+        },
+        set: (value) => {
+          if(value === '*') {
+            state.month.cronEvery = '1'
+            return
+          }
+          if (value.indexOf('/') !== -1) {
+            state.month.cronEvery = '2'
+            const valueArr = value.split('/')
+            state.month.incrementStart = Number(valueArr[0])
+            state.month.incrementIncrement = Number(valueArr[1])
+            return
+          }
+          if(value.indexOf(',') !== -1 || (value.length > 0 && !Number.isNaN(Number(value)) && Number(value) <= 12 && Number(value) >= 1)) {
+            state.month.cronEvery = '3'
+            const valueArr = value.split(',')
+            state.month.specificSpecific = valueArr.map(item => Number(item))
+            return
+          }
+          if (value.indexOf('-') !== -1) {
+            state.month.cronEvery = '4'
+            const valueArr = value.split('-')
+            state.month.rangeStart = Number(valueArr[0])
+            state.month.rangeEnd = Number(valueArr[1])
+            return
+          }
         }
-        return months;
       }),
-      yearsText: computed(() => {
-        let years = "";
-        let cronEvery = state.year.cronEvery;
-        switch (cronEvery.toString()) {
-          case "1":
-            years = "*";
-            break;
-          case "2":
-            years =
-              state.year.incrementStart + "/" + state.year.incrementIncrement;
-            break;
-          case "3":
-            state.year.specificSpecific.map((val) => {
-              years += val + ",";
-            });
-            years = years.slice(0, -1);
-            break;
-          case "4":
-            years = state.year.rangeStart + "-" + state.year.rangeEnd;
-            break;
+      yearsText: computed({
+        get: () => {
+          let years = "";
+          let cronEvery = state.year.cronEvery;
+          switch (cronEvery.toString()) {
+            case "1":
+              years = "*";
+              break;
+            case "2":
+              years =
+                state.year.incrementStart + "/" + state.year.incrementIncrement;
+              break;
+            case "3":
+              state.year.specificSpecific.map((val) => {
+                years += val + ",";
+              });
+              years = years.slice(0, -1);
+              break;
+            case "4":
+              years = state.year.rangeStart + "-" + state.year.rangeEnd;
+              break;
+          }
+          return years;
+        },
+        set: (value) => {
+          if(value === '*') {
+            state.year.cronEvery = '1'
+            return
+          }
+          if (value.indexOf('/') !== -1) {
+            state.year.cronEvery = '2'
+            const valueArr = value.split('/')
+            state.year.incrementStart = Number(valueArr[0])
+            state.year.incrementIncrement = Number(valueArr[1])
+            return
+          }
+          if(value.indexOf(',') !== -1 || (value.length > 0 && !Number.isNaN(Number(value)) && Number(value) <= 2118 && Number(value) >= 2018)) {
+            state.year.cronEvery = '3'
+            const valueArr = value.split(',')
+            state.year.specificSpecific = valueArr.map(item => Number(item))
+            return
+          }
+          if (value.indexOf('-') !== -1) {
+            state.year.cronEvery = '4'
+            const valueArr = value.split('-')
+            state.year.rangeStart = Number(valueArr[0])
+            state.year.rangeEnd = Number(valueArr[1])
+            return
+          }
         }
-        return years;
       }),
       cron: computed(() => {
         return `${state.secondsText || "*"} ${state.minutesText ||
@@ -874,12 +1080,23 @@ export default defineComponent({
         }
       }
     }
+    const setValue = (value) => {
+      const cronArr = value.split(' ')
+      state.secondsText = cronArr[0]
+      state.minutesText = cronArr[1]
+      state.hoursText = cronArr[2]
+      state.daysText = cronArr[3]
+      state.monthsText = cronArr[4]
+      state.weeksText = cronArr[5]
+      state.yearsText = cronArr[6]
+    }
     return {
       state,
       getValue,
       close,
       handleChange,
-      rest
+      rest,
+      setValue
     }
   },
 });
