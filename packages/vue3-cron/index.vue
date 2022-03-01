@@ -78,8 +78,8 @@
       @click="state.language = state.language === 'en' ? 'cn' : 'en'"
       >{{ state.language === 'en' ? 'cn' : 'en' }}</el-button
     >
-    <el-tabs type="border-card">
-      <el-tab-pane>
+    <el-tabs type="border-card" v-model="activeTab">
+      <el-tab-pane name="second">
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Seconds.name }}</span>
         </template>
@@ -146,7 +146,7 @@
           </el-row>
         </div>
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="minute">
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Minutes.name }}</span>
         </template>
@@ -213,7 +213,7 @@
           </el-row>
         </div>
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="hour">
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Hours.name }}</span>
         </template>
@@ -276,7 +276,7 @@
           </el-row>
         </div>
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="day">
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Day.name }}</span>
         </template>
@@ -423,7 +423,7 @@
           </el-row>
         </div>
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="month">
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Month.name }}</span>
         </template>
@@ -484,7 +484,7 @@
           </el-row>
         </div>
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="year">
         <template #label>
           <span><i class="el-icon-date"></i> {{ state.text.Year.name }}</span>
         </template>
@@ -569,7 +569,7 @@
 </template>
 <script>
 import Language from "./language";
-import { reactive, computed,toRefs,defineComponent } from "vue";
+import { reactive, computed,toRefs,defineComponent, ref } from "vue";
 export default defineComponent({
   name: "vue3Cron",
   props: {
@@ -579,6 +579,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const { i18n } = toRefs(props)
+    const activeTab = ref('second')
     const state = reactive({
       language: i18n.value,
       second: {
@@ -1089,14 +1090,24 @@ export default defineComponent({
       state.monthsText = cronArr[4]
       state.weeksText = cronArr[5]
       state.yearsText = cronArr[6]
+
+      if (['*', '?'].includes(cronArr[3]) && ['*', '?'].includes(cronArr[5])) {
+        state.day.cronEvery = '1'
+      }
+    }
+    const reset = () => {
+      activeTab.value = 'second'
+      setValue('* * * * * ? *')
     }
     return {
+      activeTab,
       state,
       getValue,
       close,
       handleChange,
       rest,
-      setValue
+      setValue,
+      reset
     }
   },
 });
