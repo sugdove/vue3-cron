@@ -410,6 +410,7 @@
                 :min="1"
                 :max="5"
               ></el-input-number>
+              <template v-if="state.language === 'cn'">{{ state.text.Day.someWeekday[1] }}</template>
               <el-select size="small" v-model="state.week.cronNthDayDay">
                 <el-option
                   v-for="(val, index) in 7"
@@ -418,7 +419,7 @@
                   :value="val"
                 ></el-option>
               </el-select>
-              {{ state.text.Day.someWeekday[1] }}
+              <template v-if="state.language === 'en'">{{ state.text.Day.someWeekday[1] }}</template>
             </el-radio>
           </el-row>
         </div>
